@@ -1,0 +1,7 @@
+--Dataset: US Accidents (2016 - 2023)
+--Source: https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
+--Queried using: SQLite 3
+
+--Extract table for number of accident state wise
+SELECT "State" , COUNT("State") FROM "US_Accidents_March23" GROUP BY "State"
+
