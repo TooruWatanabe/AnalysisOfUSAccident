@@ -2,6 +2,59 @@
 --Source: https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
 --Queried using: SQLite 3
 
---Extract table for number of accident state wise
-SELECT "State" , COUNT("State") FROM "US_Accidents_March23" GROUP BY "State"
+--Confirm the dataset size
+SELECT COUNT(DISTINCT ID ) FROM "US_Accidents_March23" ;
+->Number of row : 7718394 , Number of column : 46
+
+--Confirm data recording period
+SELECT MIN(Start_Time) AS Earliest_Date, MAX(Start_Time) AS Latest_Date
+FROM "US_Accidents_March23";
+->Start: 2016/01/14 20:18:33 , End: 2023/03/31 23:30:00
+
+--Extract table for number of accident in each state
+SELECT "State" , COUNT("State") FROM "US_Accidents_March23" GROUP BY "State";
+
+--Extract mothly accidents in each state
+SELECT 
+    strftime('%Y-%m', "Start_Time") AS YearMonth,
+    State,
+    COUNT(*) AS OccurrenceCount
+FROM 
+    "US_Accidents_March23" 
+GROUP BY 
+    YearMonth,
+    State
+ORDER BY 
+    YearMonth, 
+    State;
+
+--Extract hourly accidents in each state
+SELECT 
+    State,
+    strftime('%H:00', "Start_Time") AS Hourly,
+    COUNT(*) AS OccurrenceCount
+FROM 
+    "US_Accidents_March23" 
+GROUP BY 
+    State,
+    Hourly
+ORDER BY 
+    State, 
+    Hourly;
+
+--Extract number of accidents divided into Severity in each state
+SELECT 
+    State,
+    Severity,
+    COUNT(*) AS OccurrenceCount
+FROM 
+    "US_Accidents_March23" 
+GROUP BY 
+    State,
+    Severity
+ORDER BY 
+    State, 
+    Severity;
+
+
 
