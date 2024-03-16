@@ -56,5 +56,10 @@ ORDER BY
     State, 
     Severity;
 
-
+--Extract accidents occurring in San Francisco during October through December 2022
+SELECT *
+FROM  US_Accidents_March23
+WHERE strftime('%Y', Start_Time) = '2022'
+AND strftime('%m', Start_Time) IN ('10', '11', '12')
+AND County = 'San Francisco';
 
